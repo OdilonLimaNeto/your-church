@@ -1,12 +1,41 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { useState } from "react";
+import { Sidebar } from "@/components/Sidebar";
+import { Dashboard } from "@/components/Dashboard";
+import { FinanceModule } from "@/components/FinanceModule";
+import { ActivitiesModule } from "@/components/ActivitiesModule";
+import { MembersModule } from "@/components/MembersModule";
+import { AttendanceModule } from "@/components/AttendanceModule";
+import { RolesModule } from "@/components/RolesModule";
 
 const Index = () => {
+  const [activeModule, setActiveModule] = useState("dashboard");
+
+  const renderActiveModule = () => {
+    switch (activeModule) {
+      case "dashboard":
+        return <Dashboard />;
+      case "finance":
+        return <FinanceModule />;
+      case "activities":
+        return <ActivitiesModule />;
+      case "members":
+        return <MembersModule />;
+      case "attendance":
+        return <AttendanceModule />;
+      case "roles":
+        return <RolesModule />;
+      default:
+        return <Dashboard />;
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-gray-50 flex">
+      <Sidebar activeModule={activeModule} setActiveModule={setActiveModule} />
+      <main className="flex-1 p-6">
+        {renderActiveModule()}
+      </main>
     </div>
   );
 };
